@@ -1,25 +1,35 @@
+import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs";
+
 import prismadb from "@/lib/prismadb";
 
-interface DashboardPageProps {
-  params: {
-    storeId: string;
-  };
-};
+import { SettingsForm } from "./settings/components/settings-form";
 
-const DashboardPage: React.FC<DashboardPageProps> = async ({ 
-  params
-}) => {
+const SettingsPage = async ({ params }: { params: { storeId: string } }) => {
+  const { userId } = auth();
+
+  if (!userId) {
+    redirect("/sign-in");
+  }
+
   const store = await prismadb.store.findFirst({
     where: {
-      id: params.storeId
-    }
+      id: params.storeId,
+      userId,
+    },
   });
 
+  if (!store) {
+    redirect("/");
+  }
+
   return (
-    <div>
-      Active Store : {store?.name}
+    <div className="flex-col">
+      <div className="flex-1 space-y-4 p-8 pt-6">
+        <SettingsForm initialData={store} />
+      </div>
     </div>
   );
 };
 
-export default DashboardPage;
+export default SettingsPage;

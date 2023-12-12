@@ -1,9 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 
 export function MainNav({
   className,
@@ -14,13 +14,28 @@ export function MainNav({
 
   const routes = [
     {
+      href: `/${params.storeId}`,
+      label: "Overview",
+      active: pathname === `/${params.storeId}`,
+    },
+    {
+      href: `/${params.storeId}/billboards`,
+      label: "Billboards",
+      active: pathname === `/${params.storeId}/billboards`,
+    },
+
+    {
       href: `/${params.storeId}/settings`,
       label: "Settings",
       active: pathname === `/${params.storeId}/settings`,
     },
   ];
+
   return (
-    <nav className={cn("flex items-center space-x-4 lg:space-x-6", className)}>
+    <nav
+      className={cn("flex items-center space-x-4 lg:space-x-6", className)}
+      {...props}
+    >
       {routes.map((route) => (
         <Link
           key={route.href}
