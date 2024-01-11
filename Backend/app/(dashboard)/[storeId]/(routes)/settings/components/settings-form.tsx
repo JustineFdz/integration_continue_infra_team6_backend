@@ -25,6 +25,7 @@ import { Heading } from "@/components/ui/heading";
 import { AlertModal } from "@/components/modals/alert-modal";
 import { ApiAlert } from "@/components/ui/api-alert";
 import { useOrigin } from "@/hooks/use-origin";
+import { clear } from "console";
 
 const formSchema = z.object({
   name: z.string().min(2),

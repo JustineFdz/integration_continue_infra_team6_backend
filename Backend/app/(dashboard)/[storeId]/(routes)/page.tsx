@@ -6,7 +6,7 @@ import prismadb from "@/lib/prismadb";
 import { SettingsForm } from "./settings/components/settings-form";
 
 const SettingsPage = async ({ params }: { params: { storeId: string } }) => {
-  const { userId } = auth();
+  const userId = auth().userId;
 
   if (!userId) {
     redirect("/sign-in");
